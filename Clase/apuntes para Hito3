@@ -1,0 +1,56 @@
+from numpy import zeros, array, linspace, concatenate
+from numpy.linalg import norm
+import matplotlib.pyplot as plt
+from scipy.optimize import newton
+
+
+
+
+def Kepler(F, U, dt, t): # U = vector de 4 componentes
+
+    r = U[0:2]
+    rdot = U[2:4]
+    F = concatenate( (rdot,-r/norm(r)**3), axis=0 )
+
+    return F
+
+def Euler(F, U, dt, t):
+
+    return U + dt * F(U,t)
+
+def Euler_inverso( U, dt, t, F):
+    def G(X):
+        return X - U - dt * F(X,t)
+    
+    return newton( G, U)
+
+def Cauchy(Esquema, F, U0, t):
+    
+    N = len(t)-1
+    U = zeros((N+1, len(U0)))
+
+    U[0,:] = U0
+    for n in range(0,N):
+        U[n+1,:] = Esquema( F, U[n,:], t[n+1]-t[n], t[n] )
+        print(U[n+1,:])
+
+    return U 
+
+
+#dt = 0,1 
+t0 = 0
+tf =100
+N = 1000
+t = zeros(N+1)
+t = linspace(t0,tf,N+1)
+dt = (tf-t0)/N
+
+U = Cauchy( Kepler, Euler, array([1, 0, 0, 1]), t)
+
+plt.plot (U[:, 0],U[:, 1] )
+plt.show()
+
+U = Cauchy( Kepler, Euler_inverso, array([1, 0, 0, 1]), t)
+
+plt.plot(U[:, 0],U[:, 1])
+plt.show()
