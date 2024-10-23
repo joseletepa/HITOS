@@ -66,11 +66,11 @@ U = array( [ 1, 0, 0, 1 ])
 
 N = 500
 # Vectores que guardan los valores 
-x = array( zeros(N) )
-y = array( zeros(N) )
-vx = array( zeros(N) )
-vy = array( zeros(N) )
-t = array( zeros(N) )
+x =zeros(N) 
+y = zeros(N) 
+vx = zeros(N) 
+vy = zeros(N) 
+t = zeros(N) 
 
 # Condiciones iniciales
 x[0] = U[0] 
