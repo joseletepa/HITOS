@@ -183,3 +183,6 @@ plt.show()
 
 # t_2 = particion( a, b, 2*N)
 # print(t_2)
+
+# Grafico que sea el log del Error y el Log de N
+# debe salir una recta con pendiente negativa  
